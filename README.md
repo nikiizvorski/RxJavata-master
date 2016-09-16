@@ -151,6 +151,16 @@ This Subscriber responds to the Observable's stream. onNext is called when the R
 #####We are done
 Viola! We have just made our non-blocking HTTP calls on Android. Special thanks to the folks at Square and ReactiveX for making our lives easier!
 
+## Authors
+
+#### Original Author and Development Lead
+
+- Kai ruler88 [https://goo.gl/DGMF2F]
+
+#### Co-Author
+
+- Niki Izvorski (nikiizvorski@gmail.com)
+
 <br>
 #####Reference:
 Code on github: [https://goo.gl/DGMF2F] <br>
