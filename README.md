@@ -6,7 +6,8 @@ RxJavata showcases the use of Square's [Retrofit](http://square.github.io/retrof
 The FETCH button kicks off a series of HTTP requests to Blizzard API. The HTTP requests are built via Retrofit 2.0. The calls are made asynchronously through RxJava. Notice that the cards are laid out in different order each time the button is pressed. You are seeing async threading at work! Each card is rendered when the result comes back from a GET request.
 
 The Project is part of the Github Demo Project from another developer you can see how i refactor the project with all the latest
-libraries and added Butterknife too.
+libraries RxJava, RxAndroid to the latest version, ASL to the latest version, Retrofit refactor to Retrofit 2.0 and added Adapters
+Butterknife added to the latest version, added Glide latest version to load the images
 
 You can check my classes BlizzardActivity, CardsMountAdapter, BlizzardModel Class, BlizzardService, ServiceFactory to see the changes.
 
