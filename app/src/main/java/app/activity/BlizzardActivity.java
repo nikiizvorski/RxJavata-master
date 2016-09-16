@@ -12,9 +12,8 @@ import android.widget.Button;
 import com.example.rxjavata.app.R;
 
 import app.adapter.CardMountsAdapter;
-import app.model.Blizzard;
-import app.service.BlizzardService;
-import app.service.ServiceFactory;
+import app.service.MountAPI;
+import app.model.Response;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscriber;
@@ -54,23 +53,23 @@ public class BlizzardActivity extends ActionBarActivity {
 
         bFetch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                BlizzardService service = ServiceFactory.createRetrofitService(BlizzardService.class, BlizzardService.SERVICE_ENDPOINT);
-                    service.getMounts()
+
+                MountAPI.Factory.getIstance().getMounts()
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<Blizzard>() {
+                        .subscribe(new Subscriber<Response>() {
                             @Override
-                            public final void onCompleted() {
-                                // do nothing
+                            public void onCompleted() {
+
                             }
 
                             @Override
-                            public final void onError(Throwable e) {
+                            public void onError(Throwable e) {
                                 Log.e("GithubDemo", e.getMessage());
                             }
 
                             @Override
-                            public final void onNext(Blizzard response) {
+                            public void onNext(Response response) {
                                 mCardAdapter.addData(response);
                             }
                         });

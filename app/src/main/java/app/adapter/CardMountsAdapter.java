@@ -15,18 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.model.Blizzard;
+import app.model.Response;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CardMountsAdapter extends RecyclerView.Adapter<CardMountsAdapter.ViewHolder> {
-    List<Blizzard> mMounts;
+    List<Response> mMounts;
 
     public CardMountsAdapter() {
         super();
-        mMounts = new ArrayList<Blizzard>();
+        mMounts = new ArrayList<Response>();
     }
 
-    public void addData(Blizzard mounts) {
+    public void addData(Response mounts) {
         mMounts.add(mounts);
         notifyDataSetChanged();
     }
@@ -45,7 +46,7 @@ public class CardMountsAdapter extends RecyclerView.Adapter<CardMountsAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        Blizzard blizzard = mMounts.get(i);
+        Response blizzard = mMounts.get(i);
         String itemId = String.valueOf(blizzard.getMounts().get(i).getItemId());
         String creatureId = String.valueOf(blizzard.getMounts().get(i).getCreatureId());
         String items = viewHolder.repos.getResources().getString(R.string.item_id);
