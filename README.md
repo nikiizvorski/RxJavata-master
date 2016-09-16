@@ -8,6 +8,8 @@ The FETCH button kicks off a series of HTTP requests to Blizzard API. The HTTP r
 The Project is part of the Github Demo Project from another developer you can see how i refactor the project with all the latest
 libraries and added Butterknife too.
 
+You can check my classes BlizzardActivity, CardsMountAdapter, BlizzardModel Class, BlizzardService, ServiceFactory to see the changes.
+
 #####The Setup
 Let's take care of the depency injection for retrofit and RxJava/RxAndroid:
 ```java
