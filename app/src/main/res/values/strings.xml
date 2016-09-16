@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RxJavata</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="item_id">ItemID: \u0020</string>
+    <string name="creature_id">CreatureID: \u0020</string>
+</resources>
