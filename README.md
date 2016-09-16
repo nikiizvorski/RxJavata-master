@@ -1,21 +1,31 @@
-### GithubDemo
+### RxJavata Sample App
 
 #####Introduction
-GithubDemo showcases the use of Square's [Retrofit](http://square.github.io/retrofit/) and [RxJava](https://github.com/ReactiveX/RxJava/wiki) to make asynchronous HTTP Requests in Android Application. The App makes HTTP GET requests to the [Github API](https://developer.github.com/guides/getting-started/#overview) to retrieve **public repo count** and **blog URL**.
+RxJavata showcases the use of Square's [Retrofit](http://square.github.io/retrofit/) and [RxJava](https://github.com/ReactiveX/RxJava/wiki) to make asynchronous HTTP Requests in Android Application. The App makes HTTP GET requests to the [Blizzard API](https://dev.battle.net/) to retrieve **Mounts** and **mounts URL**.
 
-The FETCH button kicks off a series of HTTP requests to Github API. The HTTP requests are built via Retrofit. The calls are made asynchronously through RxJava. Notice that the cards are laid out in different order each time the button is pressed. You are seeing async threading at work! Each card is rendered when the result comes back from a GET request.
+The FETCH button kicks off a series of HTTP requests to Blizzard API. The HTTP requests are built via Retrofit 2.0. The calls are made asynchronously through RxJava. Notice that the cards are laid out in different order each time the button is pressed. You are seeing async threading at work! Each card is rendered when the result comes back from a GET request.
 
-![alt tag](http://randomdotnext.com/content/images/2015/05/demo-github-android.gif)
+The Project is part of the Github Demo Project from another developer you can see how i refactor the project with all the latest
+libraries RxJava, RxAndroid to the latest version, ASL to the latest version, Retrofit refactor to Retrofit 2.0 and added Adapters
+Butterknife added to the latest version, added Glide latest version to load the images
 
-See my blog post for the full story: [http://randomdotnext.com/retrofit-rxjava/]
+You can check my classes BlizzardActivity, CardsMountAdapter, BlizzardModel Class, BlizzardService, ServiceFactory to see the changes.
 
 #####The Setup
 Let's take care of the depency injection for retrofit and RxJava/RxAndroid:
 ```java
 dependencies {
-    compile 'io.reactivex:rxjava:1.0.+'
-    compile 'io.reactivex:rxandroid:0.23.+'
-    compile 'com.squareup.retrofit:retrofit:1.9.+'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:cardview-v7:24.1.1'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 ```
 
@@ -143,6 +153,16 @@ This Subscriber responds to the Observable's stream. onNext is called when the R
 
 #####We are done
 Viola! We have just made our non-blocking HTTP calls on Android. Special thanks to the folks at Square and ReactiveX for making our lives easier!
+
+## Authors
+
+#### Original Author and Development Lead
+
+- Kai ruler88 [https://goo.gl/DGMF2F]
+
+#### Co-Author
+
+- Niki Izvorski (nikiizvorski@gmail.com)
 
 <br>
 #####Reference:
