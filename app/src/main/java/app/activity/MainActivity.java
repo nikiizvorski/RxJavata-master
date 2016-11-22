@@ -11,6 +11,7 @@ import android.widget.Button;
 import app.Data;
 import app.adapter.CardAdapter;
 import app.model.Github;
+import app.model.Response;
 import app.service.GithubService;
 import app.service.ServiceFactory;
 import com.example.rxjavata.app.R;
@@ -72,6 +73,7 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public final void onNext(Github response) {
                                 mCardAdapter.addData(response);
+
                             }
                         });
                 }
