@@ -11,6 +11,8 @@ Butterknife added to the latest version, added Glide latest version to load the 
 
 You can check my classes BlizzardActivity, CardsMountAdapter, BlizzardModel Class, BlizzardService, ServiceFactory to see the changes.
 
+Refactor to MountsAPI Factory Instance and RxJava with Retrofit 2.0
+
 #####The Setup
 Let's take care of the depency injection for retrofit and RxJava/RxAndroid:
 ```java
