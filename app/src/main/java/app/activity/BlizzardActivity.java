@@ -60,40 +60,34 @@ public class BlizzardActivity extends ActionBarActivity {
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         //final CardMountsAdapter mCardAdapter = new CardMountsAdapter();
         final CardPetsAdapter mCardAdapter = new CardPetsAdapter();
         mRecyclerView.setAdapter(mCardAdapter);
 
          //START: button set up
-        bClear.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mCardAdapter.clear();
-            }
-        });
+        bClear.setOnClickListener(v -> mCardAdapter.clear());
 
-        bFetch.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        bFetch.setOnClickListener(v -> {
+            mountService.getPets()
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<ResponsePets>() {
+                        @Override
+                        public void onCompleted() {
 
-                mountService.getPets()
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<ResponsePets>() {
-                            @Override
-                            public void onCompleted() {
+                        }
 
-                            }
+                        @Override
+                        public void onError(Throwable e) {
 
-                            @Override
-                            public void onError(Throwable e) {
+                        }
 
-                            }
-
-                            @Override
-                            public void onNext(ResponsePets responsePets) {
-                                mCardAdapter.addData(responsePets);
-                            }
-                        });
-                }
+                        @Override
+                        public void onNext(ResponsePets responsePets) {
+                            mCardAdapter.addData(responsePets);
+                        }
+                    });
         });
     }
 
