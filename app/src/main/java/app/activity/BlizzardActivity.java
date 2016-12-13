@@ -1,24 +1,15 @@
 package app.activity;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
-
 import com.example.rxjavata.app.R;
-
 import javax.inject.Inject;
-
-import app.Data;
-import app.adapter.CardMountsAdapter;
 import app.adapter.CardPetsAdapter;
 import app.application.BlizzardApplication;
-import app.model.Response;
 import app.model.ResponsePets;
 import app.service.MountService;
 import butterknife.BindView;
@@ -26,11 +17,7 @@ import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
-import rx.subscriptions.Subscriptions;
 
 
 public class BlizzardActivity extends ActionBarActivity {
@@ -43,17 +30,18 @@ public class BlizzardActivity extends ActionBarActivity {
     Button bFetch;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    private final String KEY_RECYCLER_STATE = "recycler_state";
-    private static Bundle mBundleRecyclerViewState;
+
+    private Subscription subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Inject Dagger
         resolveDependency();
 
-        //Bind all components
+        //Inject Butterknife
         ButterKnife.bind(this);
 
          //Set up Android CardView/RecycleView
@@ -65,35 +53,19 @@ public class BlizzardActivity extends ActionBarActivity {
         final CardPetsAdapter mCardAdapter = new CardPetsAdapter();
         mRecyclerView.setAdapter(mCardAdapter);
 
-         //START: button set up
+         //Clear
         bClear.setOnClickListener(v -> mCardAdapter.clear());
 
-        bFetch.setOnClickListener(v -> {
-            mountService.getPets()
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<ResponsePets>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(ResponsePets responsePets) {
-                            mCardAdapter.addData(responsePets);
-                        }
-                    });
-        });
+        //Fetch
+        bFetch.setOnClickListener(v -> getSub(mCardAdapter));
     }
 
-    private void resolveDependency() {
-        //Add Application Components Injection Location
-        ((BlizzardApplication) getApplication()).getApiComponent().inject(BlizzardActivity.this);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscription != null && !subscription.isUnsubscribed()){
+            subscription.unsubscribe();
+        }
     }
 
     @Override
@@ -101,5 +73,17 @@ public class BlizzardActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void getSub(CardPetsAdapter mCardAdapter) {
+        subscription = mountService.getPets()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mCardAdapter::addData);
+    }
+
+    private void resolveDependency() {
+        //Add Application Components Injection Location
+        ((BlizzardApplication) getApplication()).getApiComponent().inject(BlizzardActivity.this);
     }
 }
